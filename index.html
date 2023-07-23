@@ -1,0 +1,54 @@
+<html>
+    <head>
+        <title>
+            Latihan AlpineJS
+        </title>
+        <script src="//unpkg.com/alpinejs" defer></script>
+        <style>
+            .completed{
+                text-decoration: line-through;
+            }
+        </style>
+    </head>
+    <body>
+
+        <div x-data="{ open: false }">
+            <button @click="open = !open">Expand</button>
+
+            <span x-show="open">
+                Content...
+            </span>
+
+            <h1 x-data="{ message: 'I ❤️ Alpine' }">
+                <span x-text="message"></span>
+            </h1>
+        </div>
+
+        <div x-data="{ count: 0 }">
+            <button x-on:click="if(count > 0) count--">Decrement</button>
+         
+            <span x-text="count"></span>
+
+            <button x-on:click="count++">Increment</button>
+        </div>
+
+        <div x-data="{ todos: [], fieldInput: ''}" style="margin-top:20px">
+            <form x-on:submit.prevent>
+                <input x-model="fieldInput" type="text">
+                <button x-on:click="if(fieldInput.trim().length) todos.push({ name: fieldInput, completed:false}); else fieldInput=''; fieldInput=''" type="submit">Add</button>
+            </form>
+            
+                <template x-for="todo in todos">
+                    <div>
+                        <input type="checkbox" x-model="todo.completed">
+                        <span x-text="todo.name" :class="{'completed':todo.completed}"></span>
+                        
+                        <button type="button" @click="todos = todos.filter((itemTodo) => itemTodo != todo)">x</button>
+                    </div>
+                </template>
+            
+            <hr>
+            <span x-text="todos.length"></span>
+        </div>
+    </body>
+</html>
